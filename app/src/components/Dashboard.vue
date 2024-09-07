@@ -1,27 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import FileUpload from './FileUpload.vue'
 
 // Props for the message passed to the component
 defineProps<{ }>()
 
-// Reactive state for the fetched data
-const message = ref<string>('Loading...')
-
-// Fetch data from the API when the component is mounted
-onMounted(async () => {
-  try {
-    const response = await axios.get('http://localhost:8000/api/data')
-    message.value = response.data.message  // Update message with backend data
-  } catch (error) {
-    console.error('Error fetching data:', error)
-    message.value = 'Failed to load data'
-  }
-})
 </script>
 
 <template>
-  <p>{{ message }}</p>
+  <p>Shopee report formatter</p>
+  <FileUpload/>
 </template>
 
 <style scoped>
@@ -32,6 +19,6 @@ h1 {
 
 p {
   font-size: 18px;
-  color: #333;
+  color: #2c671d;
 }
 </style>

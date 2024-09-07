@@ -4,7 +4,7 @@ from io import BytesIO
 from data_processing.preprocessing import pipeline_all_sheets
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
