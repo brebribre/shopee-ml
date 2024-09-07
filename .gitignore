@@ -35,9 +35,13 @@ public/
 .env.local
 .env.*.local
 
-
 # Yarn lock file (optional)
 yarn.lock
 
 # Other generated files
 coverage/
+
+# Virtual environment directories
+venv/
+.venv/
+env/
