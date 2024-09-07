@@ -1,5 +1,6 @@
 import pandas as pd
-from utils import clean_price_column, save_processed_data_to_excel, apply_styles
+from .utils import clean_price_column, save_processed_data_to_excel, apply_styles
+from io import BytesIO
 
 def process_single_sheet(sheet_name, xls, columns_to_read, processed_data):
     # Load data from the specified sheet
@@ -55,15 +56,21 @@ def pipeline_all_sheets(input_file):
         'Jumlah', 
         'Nomor Referensi SKU', 
         'Nama Produk'
-        ]
+    ]
 
     for sheet in xls.sheet_names:
         process_single_sheet(sheet, xls, columns_to_read, processed_data)
-    
-    return processed_data
 
-input_file = './assets/sep2022-ag2024.xlsx'
-output_file = './assets/processed_output.xlsx'
-processed_data = pipeline_all_sheets(input_file)
-save_processed_data_to_excel(output_file, processed_data)
-apply_styles(output_file)
+    # Save the processed data to a BytesIO object instead of a file
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine='openpyxl') as writer:
+        save_processed_data_to_excel(writer, processed_data)  # Save to Excel writer
+
+    
+    # Ensure the output stream's position is set to the beginning
+    output.seek(0)
+
+
+    
+    return output
+
