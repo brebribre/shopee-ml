@@ -37,7 +37,7 @@ def process_single_sheet(sheet_name, xls, columns_to_read, processed_data):
     # Store the processed data for the sheet
     processed_data[sheet_name] = grouped_data
 
-def pipeline_all_sheets(input_file, output_file):
+def pipeline_all_sheets(input_file):
     # Load the Excel file
     xls = pd.ExcelFile(input_file, engine='openpyxl')
 
@@ -59,11 +59,11 @@ def pipeline_all_sheets(input_file, output_file):
 
     for sheet in xls.sheet_names:
         process_single_sheet(sheet, xls, columns_to_read, processed_data)
-
-    # Save the processed data to an Excel file
-    save_processed_data_to_excel(output_file, processed_data)
-    apply_styles(output_file)
+    
+    return processed_data
 
 input_file = './assets/sep2022-ag2024.xlsx'
 output_file = './assets/processed_output.xlsx'
-pipeline_all_sheets(input_file, output_file)
+processed_data = pipeline_all_sheets(input_file)
+save_processed_data_to_excel(output_file, processed_data)
+apply_styles(output_file)
