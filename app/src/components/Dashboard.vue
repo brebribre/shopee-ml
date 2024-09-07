@@ -7,8 +7,9 @@ defineProps<{ }>()
 </script>
 
 <template>
-  <h2>Laporan Penjualan Shopee</h2>
-  <p>
+  <div class="container">
+    <h2>Laporan Penjualan Shopee</h2>
+    <p>
     1. Pilih file Excel yang berisi data penjualan Shopee.
     <br />
     2. Klik tombol "Upload File" untuk mengirim file.
@@ -17,10 +18,17 @@ defineProps<{ }>()
     <br />
     4. Klik tombol "Download" untuk mengunduh file hasil.
     </p>
-  <FileUpload/>
+    <FileUpload/>
+  </div>
 </template>
 
 <style scoped>
+.container{
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  align-items: center;
+}
 
 h2 {
   font-size: 32px;
