@@ -7,7 +7,7 @@ defineProps<{ }>()
 </script>
 
 <template>
-  <p>Shopee report formatter</p>
+  <p>Shopee Report Formatter</p>
   <FileUpload/>
 </template>
 
@@ -19,6 +19,6 @@ h1 {
 
 p {
   font-size: 18px;
-  color: #2c671d;
+  color: #c2ebb8;
 }
 </style>

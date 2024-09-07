@@ -7,7 +7,6 @@
         <span v-else>Upload File</span>
       </button>
   
-      <!-- Show progress bar -->
       <div v-if="isLoading">
         <progress :value="uploadProgress" max="100"></progress>
       </div>
