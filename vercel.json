@@ -4,7 +4,7 @@
       {
         "src": "app/package.json",
         "use": "@vercel/static-build",
-        "config": { "distDir": "web/dist" }
+        "config": { "distDir": "app/dist" }
       },
       {
         "src": "api/app.py",
