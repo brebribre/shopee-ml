@@ -66,11 +66,8 @@ def pipeline_all_sheets(input_file):
     with pd.ExcelWriter(output, engine='openpyxl') as writer:
         save_processed_data_to_excel(writer, processed_data)  # Save to Excel writer
 
-    
     # Ensure the output stream's position is set to the beginning
     output.seek(0)
-
-
     
     return output
 
