@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
 
 // Props for the message passed to the component
 defineProps<{ }>()
@@ -10,14 +9,15 @@ const message = ref<string>('Loading...')
 
 // Fetch data from the API when the component is mounted
 onMounted(async () => {
-  try {
-    const response = await axios.get('http://localhost:8000/api/data')
-    message.value = response.data.message  // Update message with backend data
-  } catch (error) {
-    console.error('Error fetching data:', error)
-    message.value = 'Failed to load data'
-  }
-})
+      try {
+        const response = await fetch('/api/hello')
+        const data = await response.json()
+        message.value = data.message  // Update message with backend data
+      } catch (error) {
+        console.error('Error fetching data:', error)
+        message.value = 'Failed to load data'
+      }
+    })
 </script>
 
 <template>
