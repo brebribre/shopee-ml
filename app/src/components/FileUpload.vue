@@ -1,29 +1,7 @@
-<template>
-    <div>
-      <input type="file" @change="onFileChange" />
-      
-      <button @click="submitFile" :disabled="!selectedFile || isLoading">
-        <span v-if="isLoading">Uploading... {{ uploadProgress }}%</span>
-        <span v-else>Upload File</span>
-      </button>
-  
-      <div v-if="isLoading">
-        <progress :value="uploadProgress" max="100"></progress>
-      </div>
-  
-      <div v-if="fileUrl">
-        <a :href="fileUrl" download="processed_file.xlsx">Download Processed File</a>
-      </div>
-  
-      <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
+<script setup lang="ts">
   import { ref } from 'vue';
-  import { useSendExcel } from '../hooks/useSendExcel';  // Adjust the path as needed
-  
-  const { sendExcel } = useSendExcel();
+  import { useSendExcel } from '../hooks/useSendExcel'; 
+  import LoadingBar from './LoadingBar.vue';
   
   const selectedFile = ref<File | null>(null);
   const fileUrl = ref<string | null>(null);
@@ -32,13 +10,7 @@
   const uploadProgress = ref<number>(0);
   const downloadProgress = ref<number>(0);
   
-  const onFileChange = (event: Event) => {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files[0]) {
-      selectedFile.value = target.files[0];
-    }
-  };
-  
+  const { sendExcel } = useSendExcel();
   const submitFile = async () => {
     fileUrl.value = null;
     if (!selectedFile.value) return;
@@ -66,9 +38,45 @@
   
     isLoading.value = false;
   };
+
+  const onFileChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+      selectedFile.value = target.files[0];
+    }
+  };
+  
   </script>
+
+<template>
+    <div class="container">
+        <div>
+            <input type="file" @change="onFileChange" />
+      
+            <button @click="submitFile" :disabled="!selectedFile || isLoading">
+                <span v-if="isLoading">Uploading... {{ uploadProgress }}%</span>
+                <span v-else>Upload File</span>
+            </button>
+        </div>
+     
+        <LoadingBar :isLoading="isLoading" />
+        <div v-if="fileUrl">
+            <a :href="fileUrl" download="processed_file.xlsx">Download Processed File</a>
+        </div>
+    
+        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+    </div>
+  </template>
+  
+  
   
   <style scoped>
+  .container{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .error {
     color: red;
   }
