@@ -1,0 +1,43 @@
+# Node modules folder
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# TypeScript compiled files
+*.tsbuildinfo
+
+# Production build directory
+dist/
+build/
+
+# VueJS related ignores
+.DS_Store
+public/
+
+# IDEs and editors (e.g., VSCode)
+.vscode/
+.idea/
+*.swp
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+
+# Yarn lock file (optional)
+yarn.lock
+
+# Other generated files
+coverage/
