@@ -21,7 +21,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
   <p>{{ message }}</p>
 </template>
 
