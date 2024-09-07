@@ -7,7 +7,7 @@ export const useSendExcel = () => {
 
     try {
       // Send the file to the API and track upload/download progress
-      const response = await axios.post('http://localhost:8000/api/process-excel', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/process-excel`, formData, {
         responseType: 'blob',
         onUploadProgress: (progressEvent) => {
           if (onUploadProgress && progressEvent.total) {
