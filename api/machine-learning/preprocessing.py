@@ -1,4 +1,5 @@
 import pandas as pd
+from utils import clean_price_column
 
 # Load the Excel file
 xls = pd.ExcelFile('./assets/sep2022-ag2024.xlsx', engine='openpyxl')
@@ -13,8 +14,8 @@ first_month_data = pd.read_excel(xls, sheet_name=xls.sheet_names[0], usecols=col
 first_month_data['Nomor Referensi SKU'] = first_month_data['Nomor Referensi SKU'].fillna('UNKNOWN')
 
 # Remove commas and convert the columns to float
-first_month_data['Harga Awal'] = first_month_data['Harga Awal'].str.replace('.', '').astype(int)
-first_month_data['Harga Setelah Diskon'] = first_month_data['Harga Setelah Diskon'].str.replace('.', '').astype(int)
+first_month_data = clean_price_column(first_month_data, 'Harga Awal')
+first_month_data = clean_price_column(first_month_data, 'Harga Setelah Diskon')
 
 # Display the first few rows of the data
 print(first_month_data.head())
