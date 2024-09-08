@@ -1,18 +1,18 @@
-from flask import Flask, jsonify, request, send_file, send_from_directory
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS, cross_origin
 from io import BytesIO
 from data_processing.preprocessing import pipeline_all_sheets
 import os
 
 app = Flask(__name__)
-CORS(app, support_credentials=True)
+CORS(app, resources={r"/*": {"origins": "https://shopee-ml-frontend.vercel.app"}}, supports_credentials=True)
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
 @app.route('/api/process-excel', methods=['POST'])
-@cross_origin(supports_credentials=True)
+@cross_origin(origin='https://shopee-ml-frontend.vercel.app', supports_credentials=True)
 def process_excel():
     if 'file' not in request.files:
         return {'error': 'No file provided'}, 400
@@ -28,4 +28,4 @@ def process_excel():
         return {'error': str(e)}, 500
     
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
