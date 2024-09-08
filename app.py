@@ -14,11 +14,9 @@ def get_data():
 
 @app.route('/api/process-excel', methods=['POST'])
 def process_excel():
-    if request.method == 'OPTIONS':
-        return '', 200  # Respond to preflight request
-    
     if 'file' not in request.files:
-        return {'error': 'No file provided'}, 400
+        return jsonify({'error': 'No file provided'}), 400  # Bad request for missing file
+    
     file = request.files['file']
     try:
         output = pipeline_all_sheets(file)
@@ -29,7 +27,7 @@ def process_excel():
 
     except Exception as e:
         print(e)
-        return {'error': str(e)}, 500
+        return jsonify({'error': str(e)}), 500
     
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
