@@ -19,10 +19,12 @@ def process_excel():
     file = request.files['file']
     try:
         output = pipeline_all_sheets(file)
-        return send_file(output, 
+        response = send_file(output, 
                  mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                  as_attachment=True, 
                  download_name='processed_file.xlsx')
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     except Exception as e:
         print(e)
         return {'error': str(e)}, 500
