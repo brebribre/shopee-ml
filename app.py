@@ -5,14 +5,14 @@ from data_processing.preprocessing import pipeline_all_sheets
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, support_credentials=True)
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
 @app.route('/api/process-excel', methods=['POST'])
-@cross_origin()
+@cross_origin(supports_credentials=True)
 def process_excel():
     if 'file' not in request.files:
         return {'error': 'No file provided'}, 400
@@ -27,5 +27,5 @@ def process_excel():
         print(e)
         return {'error': str(e)}, 500
     
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+  app.run(host='0.0.0.0', port=8000, debug=True)
