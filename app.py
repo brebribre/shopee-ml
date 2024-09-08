@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request, send_file
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from io import BytesIO
 from data_processing.preprocessing import pipeline_all_sheets
 import os
 
 app = Flask(__name__)
-CORS(app)
+
+# Allow CORS from specific origins, including Vercel and your custom domain
+CORS(app, resources={r"/api/*": {"origins": ["https://shopee-ml-frontend.vercel.app", "https://your-custom-domain.com"]}})
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
@@ -18,15 +20,14 @@ def process_excel():
     file = request.files['file']
     try:
         output = pipeline_all_sheets(file)
-        response = send_file(output, 
-                 mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                 as_attachment=True, 
-                 download_name='processed_file.xlsx')
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
+        return send_file(output, 
+                         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                         as_attachment=True, 
+                         download_name='processed_file.xlsx')
+
     except Exception as e:
         print(e)
         return {'error': str(e)}, 500
-    
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
