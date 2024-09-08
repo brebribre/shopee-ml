@@ -65,8 +65,13 @@ def pipeline_all_sheets(input_file):
     output = BytesIO()
     with pd.ExcelWriter(output, engine='openpyxl') as writer:
         save_processed_data_to_excel(writer, processed_data)  # Save to Excel writer
-
-    apply_styles(writer.sheets)
+        
+        # Access the workbook and worksheets to apply styles
+        workbook = writer.book  # Access the openpyxl workbook object
+        sheets = {sheet.title: sheet for sheet in workbook.worksheets}  # Extract sheet names and worksheet objects
+        
+        # Apply styles to the sheets
+        apply_styles(sheets)
 
     # Ensure the output stream's position is set to the beginning
     output.seek(0)

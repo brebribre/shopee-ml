@@ -33,20 +33,3 @@ def apply_styles(sheets):
                     pass
             adjusted_width = (max_length + 2)
             ws.column_dimensions[column].width = adjusted_width
-
-    
-        
-
-def set_column_widths(worksheet):
-    # Optionally adjust column widths to fit the content
-    for column in worksheet.columns:
-        max_length = 0
-        column_letter = column[0].column_letter  # Get the column letter
-        for cell in column:
-            try:
-                if len(str(cell.value)) > max_length:
-                    max_length = len(str(cell.value))
-            except:
-                pass
-        adjusted_width = max_length + 2
-        worksheet.column_dimensions[column_letter].width = adjusted_width
