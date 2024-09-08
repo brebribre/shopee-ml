@@ -5,14 +5,13 @@ from data_processing.preprocessing import pipeline_all_sheets
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://shopee-ml-frontend.vercel.app"}}, supports_credentials=True)
+CORS(app)
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
 @app.route('/api/process-excel', methods=['POST'])
-@cross_origin(origin='https://shopee-ml-frontend.vercel.app', supports_credentials=True)
 def process_excel():
     if 'file' not in request.files:
         return {'error': 'No file provided'}, 400
