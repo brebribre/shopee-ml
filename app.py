@@ -12,6 +12,7 @@ def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
 @app.route('/api/process-excel', methods=['POST'])
+@cross_origin()
 def process_excel():
     if 'file' not in request.files:
         return {'error': 'No file provided'}, 400
