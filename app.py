@@ -6,14 +6,12 @@ import os
 
 app = Flask(__name__)
 CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
 @app.route('/api/process-excel', methods=['POST'])
-@cross_origin()
 def process_excel():
     if 'file' not in request.files:
         return {'error': 'No file provided'}, 400
@@ -29,5 +27,4 @@ def process_excel():
         return {'error': str(e)}, 500
     
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=True)
