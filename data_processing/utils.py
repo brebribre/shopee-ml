@@ -20,7 +20,18 @@ def apply_styles(sheets):
         for cell in ws[1]:
             cell.font = Font(bold=True)
         
-        ws.column_dimensions['A'].width = 20  # Nomor Referensi SKU
-        ws.column_dimensions['B'].width = 80  # Nama Produk
-        ws.column_dimensions['C'].width = 10  # Jumlah
-        ws.column_dimensions['D'].width = 20  # Total Harga Produk
+        set_column_widths(ws)
+
+def set_column_widths(worksheet):
+    # Optionally adjust column widths to fit the content
+    for column in worksheet.columns:
+        max_length = 0
+        column_letter = column[0].column_letter  # Get the column letter
+        for cell in column:
+            try:
+                if len(str(cell.value)) > max_length:
+                    max_length = len(str(cell.value))
+            except:
+                pass
+        adjusted_width = max_length + 2
+        worksheet.column_dimensions[column_letter].width = adjusted_width
