@@ -19,7 +19,20 @@ def apply_styles(sheets):
         # Apply styling to the header row
         for cell in ws[1]:
             cell.font = Font(bold=True)
-            cell.background = "00FF00"
+            cell.fill = PatternFill(start_color="00FF00", end_color="00FF00", fill_type="solid")
+
+        # Set column widths
+        for col in ws.columns:
+            max_length = 0
+            column = col[0].column_letter  # Get the column letter
+            for cell in col:
+                try:
+                    if len(str(cell.value)) > max_length:
+                        max_length = len(str(cell.value))
+                except:
+                    pass
+            adjusted_width = (max_length + 2)
+            ws.column_dimensions[column].width = adjusted_width
 
     
         
