@@ -1,17 +1,19 @@
 from flask import Flask, jsonify, request, send_file, send_from_directory
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from io import BytesIO
 from data_processing.preprocessing import pipeline_all_sheets
 import os
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
 @app.route('/api/process-excel', methods=['POST'])
+@cross_origin()
 def process_excel():
     if 'file' not in request.files:
         return {'error': 'No file provided'}, 400
@@ -23,6 +25,7 @@ def process_excel():
                  as_attachment=True, 
                  download_name='processed_file.xlsx')
     except Exception as e:
+        print(e)
         return {'error': str(e)}, 500
     
 if __name__ == '__main__':
