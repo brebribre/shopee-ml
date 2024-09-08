@@ -21,18 +21,7 @@ def apply_styles(sheets):
             cell.font = Font(bold=True)
             cell.background = "00FF00"
 
-        # Set column widths
-        for col in ws.columns:
-            max_length = 0
-            column = col[0].column_letter  # Get the column letter
-            for cell in col:
-                try:
-                    if len(str(cell.value)) > max_length:
-                        max_length = len(str(cell.value))
-                except:
-                    pass
-            adjusted_width = (max_length + 2)
-            ws.column_dimensions[column].width = adjusted_width
+    
         
 
 def set_column_widths(worksheet):
