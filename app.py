@@ -6,7 +6,6 @@ import os
 
 app = Flask(__name__)
 
-# Allow CORS from specific origins, including Vercel and your custom domain
 CORS(app)
 
 @app.route('/api/data', methods=['GET'])
@@ -15,6 +14,9 @@ def get_data():
 
 @app.route('/api/process-excel', methods=['POST'])
 def process_excel():
+    if request.method == 'OPTIONS':
+        return '', 200  # Respond to preflight request
+    
     if 'file' not in request.files:
         return {'error': 'No file provided'}, 400
     file = request.files['file']
