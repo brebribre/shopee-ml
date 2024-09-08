@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 # Allow CORS from specific origins, including Vercel and your custom domain
-CORS(app, resources={r"/api/*": {"origins": ["https://shopee-ml-frontend.vercel.app", "https://your-custom-domain.com"]}})
+CORS(app)
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
@@ -28,6 +28,7 @@ def process_excel():
     except Exception as e:
         print(e)
         return {'error': str(e)}, 500
+    
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
