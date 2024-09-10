@@ -29,6 +29,19 @@ def process_excel():
         print(e)
         return jsonify({'error': str(e)}), 500
     
+@app.route('/api/sample/sales', methods=['GET'])
+def get_sample_sales_report():
+    try:
+        return send_file('data_processing/assets/sales-report-august-sample.xlsx', 
+                         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                         as_attachment=True, 
+                         download_name='sample-sales-report.xlsx')
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+            
+    
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
