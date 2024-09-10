@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from io import BytesIO
-from data_processing.preprocessing import pipeline_all_sheets
+from data_processing.preprocessing import pipeline_all_sheets_as_excel, pipeline_all_sheets_as_json
 import os
 
 app = Flask(__name__)
@@ -12,6 +12,21 @@ CORS(app)
 def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
+@app.route('/api/process-excel/json', methods=['POST'])
+def process_excel_json():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file provided'}), 400 
+    
+    file = request.files['file']
+    try:
+        output = pipeline_all_sheets_as_json(file)
+        return jsonify(output)
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/process-excel', methods=['POST'])
 def process_excel():
     if 'file' not in request.files:
@@ -19,7 +34,7 @@ def process_excel():
     
     file = request.files['file']
     try:
-        output = pipeline_all_sheets(file)
+        output = pipeline_all_sheets_as_excel(file)
         return send_file(output, 
                          mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                          as_attachment=True, 
