@@ -6,13 +6,13 @@ import os
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "https://shopee-ml-frontend.vercel.app/"}})
+CORS(app, resources={r"/*": {"origins": "https://shopee-ml-frontend.vercel.app"}}) 
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
     return jsonify({'message': 'Hello from the backend!'})
 
-@app.route('/api/process-excel/json', methods=['POST'])
+@app.route('/api/process-excel/json', methods=['OPTIONS', 'GET', 'POST'])
 def process_excel_json():
     if 'file' not in request.files:
         return jsonify({'error': 'No file provided'}), 400 
@@ -27,7 +27,7 @@ def process_excel_json():
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/api/process-excel', methods=['POST'])
+@app.route('/api/process-excel', methods=['OPTIONS', 'GET', 'POST'])
 def process_excel():
     if 'file' not in request.files:
         return jsonify({'error': 'No file provided'}), 400  # Bad request for missing file
