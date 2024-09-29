@@ -1,6 +1,6 @@
 # Shopee ML Backend
 
-This repository contains the backend implementation for the **Shopee ML** project, which focuses on applying machine learning models to predict sales and improve performance analytics for Shopee, an e-commerce platform. The backend is built using Python and Flask, and it provides the necessary API endpoints to support the machine learning models and data processing tasks.
+This repository contains the backend implementation for the **Shopee ML** project, which aims to visualize the performances of products in an easy-to-read way. The project also aims to apply machine learning models to give the user predictions regarding future sales performance.
 
 ## Features
 
