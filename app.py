@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from io import BytesIO
 from data_processing.preprocessing import pipeline_all_sheets_as_excel, pipeline_all_sheets_as_json
+from data_processing.individual import pipeline_all_sheets_as_excel_individual
 import os
 
 app = Flask(__name__)
@@ -34,7 +35,7 @@ def process_excel():
     
     file = request.files['file']
     try:
-        output = pipeline_all_sheets_as_excel(file)
+        output = pipeline_all_sheets_as_excel_individual(file)
         return send_file(output, 
                          mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                          as_attachment=True, 
